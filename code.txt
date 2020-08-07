@@ -1,0 +1,73 @@
+from random import randint
+
+
+class Cards():
+    cards = {
+        0: [i for i in range(1, 11)],
+        1: [i for i in range(1, 11)],
+        2: [i for i in range(1, 11)],
+        3: [i for i in range(1, 11)],
+    }
+
+
+class Dealer(Cards):
+    dealerCards = []
+
+    def __init__ (self):
+     i,j = randint(0,3),randint(0,9)
+     dc1 = self.cards[i][j]
+     i,j = randint(0,3),randint(0,9)
+     dc2 = self.cards[i][j]
+     self.dealerCards.append(dc1)
+     self.dealerCards.append(dc2)
+
+
+    def take_one_card(self):
+     i,j = randint(0,3),randint(0,9)
+     rc = self.cards[i][j]
+     self.dealerCards.append(rc)
+
+class User(Cards):
+    userCards = []
+    def __init__(self):
+        i, j = randint(0, 3), randint(0, 9)
+        uc1 = self.cards[i][j]
+        i, j = randint(0, 3), randint(0, 9)
+        uc2 = self.cards[i][j]
+        self.userCards.append(uc1)
+        self.userCards.append(uc2)
+    def choose_option(self):
+        print("1.HIT")
+        print("2.STAND")
+        option = input("please select an option:")
+        return option
+
+    def take_one_card(self):
+          i, j = randint(0, 3), randint(0, 9)
+          rc = self.cards[i][j]
+          self.userCards.append(rc)
+
+
+d = Dealer()
+u = User()
+print("dealer cards are:",d.dealerCards)
+print("user cards are:",u.userCards)
+
+while u.choose_option().lower() !="stand":
+    d.take_one_card()
+    u.take_one_card()
+    print("user cards:",u.userCards)
+    print("dealer cards:",d.dealerCards)
+    if sum(u.userCards)>21:
+        print("i lost the game")
+        break
+
+if sum(u.userCards) > sum(d.dealerCards):
+    print("user won the game")
+elif sum(u.userCards) < sum(d.dealerCards):
+    print("dealer won the game")
+else:
+    print("game is draw")
+
+
+
